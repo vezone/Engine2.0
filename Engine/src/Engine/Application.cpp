@@ -68,7 +68,7 @@ namespace Engine {
 				layer->OnUpdate();
 			
 			auto [x, y] = Input::GetMousePosition();
-			ENGINE_CORE_TRACE("{0}, {1}", x, y);
+			//ENGINE_CORE_TRACE("{0}, {1}", x, y);
 
 			if (Input::IsKeyPressed(70))
 				ENGINE_CORE_TRACE("F pressed");

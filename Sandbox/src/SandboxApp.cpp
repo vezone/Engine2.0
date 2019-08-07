@@ -11,12 +11,15 @@ public:
 
 	void OnUpdate() override
 	{
-		ENGINE_INFO("Example: OnUpdate()");
+		if (Engine::Input::IsKeyPressed(ENGINE_KEY_T))
+		{
+			ENGINE_CORE_ERROR("T is pressed from EXAMPLE Layer *ghm-ghm* *sigh*");
+		}
 	}
 
 	void OnEvent(Engine::Event& event) override
 	{
-		ENGINE_TRACE("{0}", event.GetName());
+		//ENGINE_TRACE("{0}", event.GetName());
 	}
 
 };
@@ -26,7 +29,6 @@ class Sandbox : public Engine::Application
 public:
 	Sandbox() 
 	{
-		ENGINE_INFO("Sandbox ctor");
 		PushLayer(new ExampleLayer());
 		PushOverlay(new Engine::ImGuiLayer());
 	}
