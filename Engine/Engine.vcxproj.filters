@@ -1,104 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Events">
-      <UniqueIdentifier>{5FAFB439-CB6F-3070-94AA-79ED002A754C}</UniqueIdentifier>
+    <Filter Include="src\Engine">
+      <UniqueIdentifier>{12A1320E-FE58-745B-6760-4DB753370F4C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\imgui">
-      <UniqueIdentifier>{850DAB97-7170-3A3C-1AF6-72F2063806BF}</UniqueIdentifier>
+    <Filter Include="src\Engine\Events">
+      <UniqueIdentifier>{B624EAB0-223B-E846-6BB2-7368D707B9CE}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform">
-      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    <Filter Include="src\Engine\imgui">
+      <UniqueIdentifier>{FCB3CBAA-E8AC-EAFC-11DF-CF81FD36CA08}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\OpenGL">
-      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
+    <Filter Include="src\Platform">
+      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\Windows">
-      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    <Filter Include="src\Platform\OpenGL">
+      <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows">
+      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\glm">
+      <UniqueIdentifier>{829FC5A8-6E57-07F6-D75E-E051C335A2E6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine.h" />
+    <ClInclude Include="src\Engine.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\Application.h">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Core.h">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\EntryPoint.h">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Events\ApplicationEvent.h">
-      <Filter>Engine\Events</Filter>
+      <Filter>src\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Events\Event.h">
-      <Filter>Engine\Events</Filter>
+      <Filter>src\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Events\KeyEvent.h">
-      <Filter>Engine\Events</Filter>
+      <Filter>src\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Events\MouseEvent.h">
-      <Filter>Engine\Events</Filter>
+      <Filter>src\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Input.h">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\KeyCodes.h">
+      <Filter>src\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Layer.h">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\LayerStack.h">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Log.h">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\MouseButtonCodes.h">
+      <Filter>src\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Window.h">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\imgui\ImGuiLayer.h">
-      <Filter>Engine\imgui</Filter>
+      <Filter>src\Engine\imgui</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine_pch.h" />
-    <ClInclude Include="src\Engine\MouseButtonCodes.h" />
-    <ClInclude Include="src\Engine\KeyCodes.h" />
+    <ClInclude Include="src\engine_pch.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Layer.cpp">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\LayerStack.cpp">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Log.cpp">
-      <Filter>Engine</Filter>
+      <Filter>src\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\imgui\ImGuiLayer.cpp">
-      <Filter>Engine\imgui</Filter>
+      <Filter>src\Engine\imgui</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine_pch.cpp" />
+    <ClCompile Include="src\engine_pch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vendor\glm\glm">
+      <Filter>vendor\glm</Filter>
+    </None>
   </ItemGroup>
 </Project>
