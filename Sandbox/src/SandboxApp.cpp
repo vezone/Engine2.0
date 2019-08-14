@@ -19,7 +19,7 @@ public:
 
 	void OnEvent(Engine::Event& event) override
 	{
-		//ENGINE_TRACE("{0}", event.GetName());
+		ENGINE_TRACE("{0}", event.GetName());
 	}
 
 };
