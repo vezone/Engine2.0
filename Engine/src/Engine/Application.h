@@ -6,6 +6,7 @@
 #include "Engine/imgui/ImGuiLayer.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Events/ApplicationEvent.h"
+#include "Engine/Renderer/Shader.h"
 
 namespace Engine {
 	
@@ -16,7 +17,11 @@ namespace Engine {
 		std::unique_ptr<Window> m_Window;
 		LayerStack m_LayerStack;
 		ImGuiLayer* m_ImGuiLayer;
-
+		
+		unsigned int m_VertexArray;
+		unsigned int m_VertexBuffer;
+		unsigned int m_IndexBuffer;
+		std::unique_ptr<Shader> m_Shader;
 	private:
 		static Application* s_Instance;
 		bool OnWindowClosed(WindowClosedEvent& event);

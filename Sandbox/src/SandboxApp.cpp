@@ -6,7 +6,6 @@ public:
 	ExampleLayer()
 		: Layer("Example")
 	{
-		ENGINE_INFO("Example ctor");
 	}
 
 	void OnUpdate() override
@@ -19,7 +18,7 @@ public:
 
 	void OnEvent(Engine::Event& event) override
 	{
-		ENGINE_TRACE("{0}", event.GetName());
+		//ENGINE_TRACE("{0}", event.GetName());
 	}
 
 };
