@@ -5,16 +5,16 @@
 
 namespace Engine
 {
-	
+
 	VertexBuffer* Engine::VertexBuffer::Create(float* vertices, uint32_t size)
 	{
 		switch (RendererAPI::GetAPI())
 		{
-		case RendererAPI::API::None :
+		case RendererAPI::API::None:
 			{
 				ENGINE_CORE_ASSERT(0, "RenderAPI: none");
 			}
-		case RendererAPI::API::OpenGL :
+		case RendererAPI::API::OpenGL:
 			{
 			return new OpenGLVertexBuffer(vertices, size);
 			}

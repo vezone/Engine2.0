@@ -9,6 +9,25 @@ namespace Engine {
 
 	Application* Application::s_Instance = nullptr;
 
+	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case ShaderDataType::None:   return 0;
+		case ShaderDataType::Float:  return GL_FLOAT;
+		case ShaderDataType::Float2: return GL_FLOAT;
+		case ShaderDataType::Float3: return GL_FLOAT;
+		case ShaderDataType::Float4: return GL_FLOAT;
+		case ShaderDataType::Mat3:   return GL_FLOAT;
+		case ShaderDataType::Mat4:   return GL_FLOAT;
+		case ShaderDataType::Int:    return GL_INT;
+		case ShaderDataType::Int2:   return GL_INT;
+		case ShaderDataType::Int3:   return GL_INT;
+		case ShaderDataType::Int4:   return GL_INT;
+		case ShaderDataType::Bool:   return GL_BOOL;
+		}
+	}
+
 	Application::Application()
 	{
 		//NOTE: for now
@@ -25,33 +44,55 @@ namespace Engine {
 		glBindVertexArray(m_VertexArray);
 		
 		//OpenGLVertexBuffer
-		float vertices[3 * 3] =
+		float vertices[3 * 7] =
 		{
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f 
+			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 1.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f,	0.2f, 0.0f, 1.0f, 1.0f,
+			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, 9 * sizeof(float)));
-		m_VertexBuffer->Bind();
-
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 		
+		//buffer layout
+		{
+			BufferLayout layout = {
+				{ShaderDataType::Float3, "a_Position" },
+				{ShaderDataType::Float4, "a_Color" }
+			};
+			m_VertexBuffer->SetLayout(layout);
+		}
+
+		uint32_t index = 0;
+		const auto& layout = m_VertexBuffer->GetLayout();
+		for (const auto& element : layout)
+		{
+			glEnableVertexAttribArray(index);
+			glVertexAttribPointer(index, 
+				element.GetComponentCount(), 
+				ShaderDataTypeToOpenGLBaseType(element.Type), 
+				element.Normalized ? GL_TRUE : GL_FALSE, 
+				layout.GetStride(),
+				(const void*) element.Offset);
+			index++;
+		}
+
 		uint32_t indices[3] = { 0, 1, 2 };
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, 3));
+		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(indices[0])));
 		m_IndexBuffer->Bind();
 
 		std::string vertex = R"(
 			#version 330 core
 		
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec4 a_Color;
 			
 			out vec4 o_Position;
+			out vec4 o_aColor;
 
 			void main()
 			{
 				gl_Position = vec4(a_Position, 1.0);
 				o_Position = gl_Position;
+				o_aColor = a_Color;
 			}	
 		)";
 
@@ -61,10 +102,12 @@ namespace Engine {
 			layout(location = 0) out vec4 o_Color;
 			
 			in vec4 o_Position;
-
+			in vec4 o_aColor;
+			
 			void main()
 			{
 				o_Color = 0.5 * o_Position + 0.5;
+				o_Color = o_aColor;
 			}	
 		)";
 
