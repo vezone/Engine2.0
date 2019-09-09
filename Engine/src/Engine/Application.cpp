@@ -35,8 +35,8 @@ namespace Engine {
 		m_VertexBuffer->Bind();
 
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, 0, 3 * sizeof(float), 0);
-
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		
 		uint32_t indices[3] = { 0, 1, 2 };
 		m_IndexBuffer.reset(IndexBuffer::Create(indices, 3));
 		m_IndexBuffer->Bind();
@@ -64,7 +64,7 @@ namespace Engine {
 
 			void main()
 			{
-				o_Color = 0.75*o_Position + 0.5;
+				o_Color = 0.5 * o_Position + 0.5;
 			}	
 		)";
 
