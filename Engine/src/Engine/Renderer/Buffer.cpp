@@ -8,15 +8,15 @@ namespace Engine
 
 	VertexBuffer* Engine::VertexBuffer::Create(float* vertices, uint32_t size)
 	{
-		switch (RendererAPI::GetAPI())
+		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None:
+			case Renderer::API::None:
 			{
-				ENGINE_CORE_ASSERT(0, "RenderAPI: none");
+					ENGINE_CORE_ASSERT(0, "RenderAPI: none");
 			}
-		case RendererAPI::API::OpenGL:
+			case Renderer::API::OpenGL:
 			{
-			return new OpenGLVertexBuffer(vertices, size);
+				return new OpenGLVertexBuffer(vertices, size);
 			}
 		}
 		ENGINE_CORE_ASSERT(0, "unknown render API !");
@@ -25,13 +25,13 @@ namespace Engine
 
 	IndexBuffer* Engine::IndexBuffer::Create(uint32_t* indices, uint32_t count)
 	{
-		switch (RendererAPI::GetAPI())
+		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None:
+			case Renderer::API::None:
 			{
 				ENGINE_CORE_ASSERT(0, "RenderAPI: none");
 			}
-			case RendererAPI::API::OpenGL:
+			case Renderer::API::OpenGL:
 			{
 				return new OpenGLIndexBuffer(indices, count);
 			}

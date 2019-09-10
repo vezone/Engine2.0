@@ -8,6 +8,7 @@
 #include "Engine/Events/ApplicationEvent.h"
 #include "Engine/Renderer/Shader.h"
 #include "Engine/Renderer/Buffer.h"
+#include "Engine/Renderer/VertexArray.h"
 
 namespace Engine {
 	
@@ -18,11 +19,12 @@ namespace Engine {
 		std::unique_ptr<Window> m_Window;
 		LayerStack m_LayerStack;
 		ImGuiLayer* m_ImGuiLayer;
-		
-		unsigned int m_VertexArray;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer>  m_IndexBuffer;
-		std::unique_ptr<Shader> m_Shader;
+
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexArray> m_TriangleVertexArray;
+
+		std::shared_ptr<Shader> m_ShaderSquare;
+		std::shared_ptr<VertexArray> m_SquareVertexArray;
 	private:
 		static Application* s_Instance;
 		bool OnWindowClosed(WindowClosedEvent& event);
