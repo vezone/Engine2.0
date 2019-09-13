@@ -2,8 +2,9 @@
 
 #include "Application.h"
 #include "Input.h"
-
-#include <Glad/glad.h>
+#include "Engine/Renderer/Renderer.h"
+#include "Renderer/RenderCommand.h"
+#include "Platform/OpenGL/OpenGLRendererAPI.h"
 
 namespace Engine {
 
@@ -49,10 +50,11 @@ namespace Engine {
 		m_TriangleVertexArray->AddIndexBuffer(triangleIndexBuffer);
 
 		m_SquareVertexArray.reset(VertexArray::Create());
-		float squareVertices[3 * 3] =
+		float squareVertices[3 * 4] =
 		{
 			-0.9f, -0.9f, 0.0f,
-			-0.7f,  0.9f, 0.0f,
+			-0.9f,  0.9f, 0.0f,
+			-0.5f,  0.9f, 0.0f,
 			-0.5f, -0.9f, 0.0f
 		};
 		std::shared_ptr<VertexBuffer> squareVertexBuffer;
@@ -64,9 +66,9 @@ namespace Engine {
 		squareVertexBuffer->SetLayout(squareLayout);
 		m_SquareVertexArray->AddVertexBuffer(squareVertexBuffer);
 		
-		uint32_t squareIndices[3] = { 0, 1, 2 };
+		uint32_t squareIndices[] = { 0, 1, 2, 2, 3, 0 };
 		std::shared_ptr<IndexBuffer> squareIndexBuffer;
-		squareIndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(indices[0])));
+		squareIndexBuffer.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(squareIndices[0])));
 		squareIndexBuffer->Bind();
 		m_SquareVertexArray->AddIndexBuffer(squareIndexBuffer);
 
@@ -176,16 +178,18 @@ namespace Engine {
 	{
 		while (m_Running)
 		{
-			glClearColor(0.1f, 0.1f, 0.1f, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
-			
-			m_Shader->Bind();
-			m_TriangleVertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_TriangleVertexArray->GetIndexBuffers()->GetCount(), GL_UNSIGNED_INT, nullptr);
-			
-			m_ShaderSquare->Bind();
-			m_SquareVertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_SquareVertexArray->GetIndexBuffers()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+			RenderCommand::Clear();
+
+			Renderer::BeginScene();
+			{
+				m_Shader->Bind();
+				Renderer::Submit(m_TriangleVertexArray);
+
+				m_ShaderSquare->Bind();
+				Renderer::Submit(m_SquareVertexArray);
+			}
+			Renderer::EndScene();
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

@@ -9,11 +9,11 @@ namespace Engine
 	{
 		switch (Renderer::GetAPI())
 		{
-			case Renderer::API::None:
+			case RendererAPI::API::None:
 			{
 				ENGINE_CORE_ASSERT(0, "RenderAPI: none");
 			}
-			case Renderer::API::OpenGL:
+			case RendererAPI::API::OpenGL:
 			{
 				return new OpenGLVertexArray();
 			}
