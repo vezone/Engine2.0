@@ -10,7 +10,8 @@ namespace Engine {
 
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application() 
+		: m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
 	{
 		//NOTE: for now
 		ENGINE_CORE_ASSERT(s_Instance == NULL, "Applciation already exists!");
@@ -52,10 +53,10 @@ namespace Engine {
 		m_SquareVertexArray.reset(VertexArray::Create());
 		float squareVertices[3 * 4] =
 		{
-			-0.9f, -0.9f, 0.0f,
-			-0.9f,  0.9f, 0.0f,
-			-0.5f,  0.9f, 0.0f,
-			-0.5f, -0.9f, 0.0f
+			-0.8f, -0.8f, 0.0f, //-0.5f, -0.5f, 0.0f,
+			-0.8f,  0.8f, 0.0f, //-0.5f,  0.5f, 0.0f,
+			-0.5f,  0.8f, 0.0f, // 0.5f,  0.5f, 0.0f,
+			-0.5f, -0.8f, 0.0f  // 0.5f, -0.5f, 0.0f 
 		};
 		std::shared_ptr<VertexBuffer> squareVertexBuffer;
 		squareVertexBuffer.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
@@ -78,12 +79,14 @@ namespace Engine {
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
 			
+			uniform mat4 u_ViewProjection;
+
 			out vec4 o_Position;
 			out vec4 o_aColor;
 
 			void main()
 			{
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 				o_Position = gl_Position;
 				o_aColor = a_Color;
 			}	
@@ -110,12 +113,14 @@ namespace Engine {
 			#version 330 core
 		
 			layout(location = 0) in vec3 a_Position;
-			
+
+			uniform mat4 u_ViewProjection;			
+
 			out vec4 o_Position;
 
 			void main()
 			{
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 				o_Position = gl_Position;
 			}	
 		)";
@@ -176,18 +181,24 @@ namespace Engine {
 
 	void Application::Run()
 	{
+		float rotate = 0.0f;
 		while (m_Running)
 		{
 			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 			RenderCommand::Clear();
 
-			Renderer::BeginScene();
+			//m_Camera.SetPosition({0.5f, 0.5f, 0.0f});
+			m_Camera.SetRotation(rotate);
+			rotate += 1.0f;
+			if (rotate > 360.0f)
 			{
-				m_Shader->Bind();
-				Renderer::Submit(m_TriangleVertexArray);
+				rotate = 0.0f;
+			}
 
-				m_ShaderSquare->Bind();
-				Renderer::Submit(m_SquareVertexArray);
+			Renderer::BeginScene(m_Camera);
+			{
+				Renderer::Submit(m_Shader, m_TriangleVertexArray);
+				Renderer::Submit(m_ShaderSquare, m_SquareVertexArray);
 			}
 			Renderer::EndScene();
 

@@ -1,11 +1,10 @@
 #include "engine_pch.h"
 #include "Shader.h"
-
+#include <glm/gtc/type_ptr.hpp>
 #include <Glad/glad.h>
 
 namespace Engine
 {
-
 	Engine::Shader::Shader(const std::string& vertex, const std::string& fragment)
 	{
 		// Create an empty vertex shader handle
@@ -121,4 +120,9 @@ namespace Engine
 		glUseProgram(0);
 	}
 
+	void Shader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix)
+	{
+		int location = glGetUniformLocation(m_RendererId, name.c_str());
+		glUniformMatrix4fv(location, 1, 0, glm::value_ptr(matrix));
+	}
 }
